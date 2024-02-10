@@ -6,8 +6,8 @@ if [ -f /home/pyro/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo 
 fi
 
 # git auto complete
-if [ -f /home/pyro/.bashScripts/gitAutoComplete.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/pyro/.bashScripts/gitAutoComplete.sh
+if [ -f /home/pyro/.bashScripts/.git-completion.bash ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/pyro/.bashScripts/.git-completion.bash
 fi
 
 ##-----------------------------------------------------
