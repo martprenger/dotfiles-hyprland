@@ -11,12 +11,6 @@ if [ -f /home/pyro/.bashScripts/.git-completion.bash ] && [ -n "$( echo $- | gre
 fi
 
 ##-----------------------------------------------------
-## synth-shell-greeter.sh
-if [ -f /home/pyro/.config/synth-shell/synth-shell-greeter.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/pyro/.config/synth-shell/synth-shell-greeter.sh
-fi
-
-##-----------------------------------------------------
 ## better-ls
 if [ -f /home/pyro/.config/synth-shell/better-ls.sh ] && [ -n "$( echo $- | grep i )" ]; then
 	source /home/pyro/.config/synth-shell/better-ls.sh

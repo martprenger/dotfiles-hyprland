@@ -1,4 +1,4 @@
-##==============================================================================
+##================================ ==============================================
 ## COLORS
 ##
 ## Control the color and format scheme of the bash prompt.
@@ -41,8 +41,9 @@ enable_command_on_new_line=false  # Add new line between prompt and command
 ##==============================================================================
 ## USER
 ##==============================================================================
-font_color_user="white"
+font_color_user="dark-gray"
 background_user="blue"
+texteffect_user="bold"
 
 
 
@@ -51,6 +52,7 @@ background_user="blue"
 ##==============================================================================
 font_color_host="white"
 background_host="light-blue"
+texteffect_host="bold"
 
 
 
@@ -59,6 +61,7 @@ background_host="light-blue"
 ##==============================================================================
 font_color_pwd="dark-gray"
 background_pwd="white"
+texteffect_pwd="bold"
 
 max_pwd_char="25"
 pwd_trunc_symbol="…"
@@ -70,6 +73,7 @@ pwd_trunc_symbol="…"
 ##==============================================================================
 font_color_git="light-gray"
 background_git="dark-gray"
+texteffect_git="bold"
 
 git_symbol_synced=''
 git_symbol_unpushed=' ▲'
@@ -89,6 +93,7 @@ git_update_period_minutes=15	# Use -1 to disable automatic updates
 ##==============================================================================
 font_color_pyenv="white"
 background_pyenv="blue"
+texteffect_pyenv="bold"
 
 
 
@@ -97,6 +102,7 @@ background_pyenv="blue"
 ##==============================================================================
 font_color_kube="white"
 background_kube="purple"
+texteffect_kube="bold"
 
 
 
@@ -105,6 +111,7 @@ background_kube="purple"
 ##==============================================================================
 font_color_tf="purple"
 background_tf="light-purple"
+texteffect_tf="bold"
 
 
 
@@ -113,6 +120,7 @@ background_tf="light-purple"
 ##==============================================================================
 font_color_clock="white"
 background_clock="light-blue"
+texteffect_clock="bold"
 
 clock_format="%H:%M"
 
@@ -121,5 +129,6 @@ clock_format="%H:%M"
 ##==============================================================================
 ## INPUT (user typed command)
 ##==============================================================================
-font_color_input="45"
+font_color_input="white"
 background_input="none"
+texteffect_input=""
