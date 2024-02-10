@@ -1,0 +1,49 @@
+#!/bin/sh
+
+bat1=/sys/class/power_supply/BAT0/
+bat2=/sys/class/power_supply/BAT1/
+per1="$(cat "$bat1/capacity")"
+per2="$(cat "$bat2/capacity")"
+per=$(( (per1 + per2) / 2 ))
+
+icon() {
+    [ $(cat "$bat1/status") = Charging ] && echo "" && exit
+    [ $(cat "$bat2/status") = Charging ] && echo "" && exit
+
+    if [ "$per" -gt "90" ]; then
+        icon=""
+    elif [ "$per" -gt "80" ]; then
+        icon=""
+    elif [ "$per" -gt "70" ]; then
+        icon=""
+    elif [ "$per" -gt "60" ]; then
+        icon=""
+    elif [ "$per" -gt "50" ]; then
+        icon=""
+    elif [ "$per" -gt "40" ]; then
+        icon=""
+    elif [ "$per" -gt "30" ]; then
+        icon=""
+    elif [ "$per" -gt "20" ]; then
+        icon=""
+    elif [ "$per" -gt "10" ]; then
+        icon=""
+    elif [ "$per" -gt "0" ]; then
+        icon=""
+        if [ ! -f battery_low_notified ]; then
+            echo "Battery Low" && notify-send -u critical "Battery Low" "Connect Charger"
+            touch battery_low_notified
+        fi
+    else
+        echo  && exit
+    fi
+    echo "$icon"
+}
+
+percent() {
+    echo "$per% "
+}
+
+[ "$1" = "icon" ] && icon && exit
+[ "$1" = "percent" ] && percent && exit
+exit

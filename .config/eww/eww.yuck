@@ -1,0 +1,205 @@
+(include "revealer.yuck")
+(include "metrics.yuck")
+(include "controls.yuck")
+
+;; workspaces widget ;;
+
+(deflisten workspace
+  "scripts/workspace.sh")
+
+(defwidget workspace []
+  (box :class "workspace widget" :orientation "h" :space-evenly "false" 	
+    (eventbox :onscroll "echo {} | sed -e 's/up/-1/g' -e 's/down/+1/g' | xargs hyprctl dispatch workspace" 
+      (literal :content workspace)
+  )))
+
+;; Clock Widgets ;;
+
+(defwidget clock []
+	(box	:orientation "h" 
+        :spacing-evenly ""
+			  :class "time widget" 
+    
+	(button	:onclick "scripts/popup calendar"	
+			:class "time" time)))
+(defpoll time	:interval "1s"	"date '+%H:%M'")
+
+;; Battery Widgets ;;
+
+(defwidget bat [?class]
+  (box	:orientation "h"	
+			  :space-evenly "false"    
+        :class "hover-module ${class} "
+
+    (revealer-on-hover :class "hl-on-hover"
+        :var reveal_bat
+        :varname "reveal_bat"
+        :transition "slideright"
+        :class "bat"
+      (hovered-sign :var reveal_bat
+        (label :text ""))
+      (label  :class "bat-precentage"
+        :text battery-cappacity)
+	  (button :onclick "" :class "bat-icon" battery))))
+
+(defvar reveal_bat false)
+(defpoll battery			:interval "1s"	"scripts/battery icon")
+(defpoll battery-cappacity	:interval "1s"	"scripts/battery percent")
+
+;; wifi widget ;;
+
+(defwidget wifi [?class]
+	(box	:orientation "h"	
+			  :space-evenly "false"    
+        :class "hover-module ${class}"
+
+    (revealer-on-hover :class "hl-on-hover"
+        :var reveal_wifi
+        :varname "reveal_wifi"
+        :transition "slideright"
+        :class "wifi"
+      (hovered-sign :var reveal_wifi
+        (label :text ""))
+      (label  :class "wifi-name"
+        :text wifi_name)
+	  (button :onclick "scripts/rofi-wifi-menu.sh" wifi_icon))))
+        
+(defvar reveal_wifi false)
+(defpoll wifi_icon			:interval "1s"	"scripts/wifi.sh icon")
+(defpoll wifi_name	:interval "1s"	"scripts/wifi.sh name")
+
+;; volume widget ;;
+
+(defwidget volume [?class]
+  (box :space-evenly false
+    :class "hover-module ${class}"
+    (revealer-on-hover :class "hl-on-hover"
+      :var revealVolume
+      :varname "revealVolume"
+      :transition "slideleft"
+      :class "volume"
+      
+
+      (hovered-sign :var revealVolume
+        (label :text "")
+        (label :text "")
+      )
+      (metric :icon ""
+        :class "volume"
+        :value volume
+        :onchange "amixer -D pulse sset Master {}%")
+	  (button :onclick "pavucontrol &" volume_icon))
+  )
+)
+
+(defpoll volume :interval "1s"  "scripts/getvol.sh")
+(defpoll volume_icon :interval "1s"  "scripts/volume_icon.sh")
+(defvar revealVolume false)
+
+;; brightness widget ;;
+
+(defwidget brightness [?class]
+  (box :space-evenly false
+    :class "hover-module ${class}"
+    (revealer-on-hover :class "hl-on-hover"
+      :var revealBrightness
+      :varname "revealBrightness"
+      :transition "slideleft"
+      :class "brightness"
+      
+
+      (hovered-sign :var revealBrightness
+        (label :text "")
+        (label :text "")
+      )
+      (metric :icon ""
+        :class "brightness"
+        :value brightness_percentage
+        :onchange "scripts/brightness.sh set {}")
+    (label :text brightness_icon))
+  )
+)
+
+(defpoll brightness_percentage :interval "1s"  "scripts/brightness.sh get")
+(defpoll brightness_icon :interval "1s"  "scripts/brightness.sh get_icon")
+(defvar revealBrightness false)
+
+;; util widget ;;
+
+(defwidget util []
+  (box :class "util widget" :orientation "h" :space-evenly false :halign "end" :spacing 10
+    (box :orientation "h" :spacing 2 :space-evenly false :halign "end"
+      (brightness)
+      (volume)
+      (wifi)
+      (bat)
+  )))
+
+;; locations in bar ;;
+
+(defwidget left []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "start"
+  (workspace)
+  ))
+
+(defwidget right []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "end"
+    (util)
+    (clock)
+  ))
+
+
+(defwidget center []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "center"
+  ))
+
+;; bar ;;
+
+(defwidget bar_1 []
+
+  (box :class "bar_class"
+       :orientation "h"
+  (left)
+  (center)
+  (right)
+    ))
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "4px"  
+                      :width "99%"
+                      :height "30px"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "4%")
+  :exclusive true
+  (bar_1))
+
+;; Calendar Widgets ;;
+
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+
+(defwidget cal []
+	(box :class "cal" :orientation "v"
+	(box :class "cal-in"
+	(calendar :class "cal" 
+			  :day calendar_day 
+			  :year calendar_year))))
+
+(defwindow calendar
+  :monitor 0
+	:geometry (geometry 
+            :x "6px" 
+						:y "4px" 
+            :anchor "top right"
+						:width "270px" 
+						:height "60px")
+(cal))
