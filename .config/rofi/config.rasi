@@ -62,7 +62,7 @@ entry {
 
 // Lists //
 listbox {
-    padding:                     30px;
+    padding:                     10px;
     spacing:                     0px;
     orientation:                 horizontal;
     children:                    [ "listview" , "mode-switcher" ];
@@ -74,7 +74,7 @@ listview {
     enabled:                     true;
     columns:                     2;
     cycle:                       true;
-    dynamic:                     true;
+    dynamic:                     false;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
@@ -116,7 +116,7 @@ element {
 }
 @media(max-aspect-ratio: 1.8) {
     element {
-        orientation:             vertical;
+        orientation:             horizontal;
     }
 }
 element selected.normal {
@@ -124,7 +124,7 @@ element selected.normal {
     text-color:                  @select-fg;
 }
 element-icon {
-    size:                        47px;
+    size:                        40px;
     cursor:                      inherit;
     background-color:            transparent;
     text-color:                  inherit;
