@@ -46,7 +46,9 @@ image_files=$(find "$WALLPAPERS_PATH" -type f \( -iname "*.jpg" -o -iname "*.jpe
     fi
 
     # Use Rofi to display the list of image files (show only filenames)
-    selected_image=$(echo "$image_files" | xargs -n 1 basename | rofi -dmenu -i -p "Select an image:")
+    selected_image=$(echo "$image_files" | xargs -n 1 basename | rofi -dmenu -i -p "Select an image:" -show-icons -icon-theme "$icons_dir")
+
+
 
     # Check if the user selected a file
     if [ -z "$selected_image" ]; then

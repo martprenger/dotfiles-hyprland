@@ -12,8 +12,12 @@ configuration {
     icon-theme:                  "Tela-circle-dracula";
 }
 
-@theme "~/.config/rofi/themes/theme.rasi"
+file-browser {
+    show-icons: true;
+    file-icon: "image";
+}
 
+@theme "~/.config/rofi/themes/theme.rasi"
 
 // Main //
 window {
@@ -30,6 +34,7 @@ window {
     border-color:                @main-br;
     background-color:            transparent;
 }
+
 mainbox {
     enabled:                     true;
     spacing:                     0px;
